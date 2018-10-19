@@ -1,6 +1,6 @@
 # Zombie Simulation
 
-This project simulates the spread of a zombie infection on an isolated island over a period of time.
+This project that, when given initial susceptible and infected populations, simulates the spread of a zombie infection on an isolated island over a period of time. This project was at its incepton based on an SIR model but was turned into a more probabilistic model over time.
 
 ## Requirements
 
