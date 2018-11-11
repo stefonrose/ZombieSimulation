@@ -28,3 +28,4 @@ For this simulation, they will already have been imported in the files you downl
 
 Be sure the config, functions and Simulation-v5 files are in the same directory.  
 Double click the Simulation-v5 file to run the simulation.
+If you are unable to run it by double-clicking it, then you can open it in your python IDE and run it that way.
