@@ -417,131 +417,130 @@ def main():
     
     
     
-#    for x in range(1, config.initPop + 1):
-#        globals()["per"+str(x)] = Susceptible()
-#        totalID.append(globals()["per"+str(x)].getID())
-#        susceptID.append(globals()["per"+str(x)].getID())
-#        
-#    for y in range(1, config.zombiePop + 1):
-#        globals()["per"+str(y)].changeStatus("Zombie")
-#        
-#    endVal = len(totalID) + 1
-#    for x in range(1, endVal):
-#        print(str(x) + ": "+ str(globals()["per"+str(x)]))
-#    
-#    input("\nPress enter to run simulation: ")
-#    print("\n")
-#    
-#    config.susceptPop = len(susceptID)
-#    runSim = True
-#    while runSim:
-#    #while config.time < 672:
-#        #print("\nTime {}".format(time))
-#        
-#        for x in range(1, endVal):
-#            globals()["per"+str(x)].walk()
-#            if globals()["per"+str(x)].getStatus() == "Susceptible":
-#                globals()["per"+str(x)].buildDefense()
-#            if globals()["per"+str(x)].getStatus() == "Infected" or globals()["per"+str(x)].getStatus() == "Recovered":
-#                globals()["per"+str(x)].determineFate()
-#                if globals()["per"+str(x)].getStatus() == "Removed":
-#                    globals()["per"+str(x)].setCOD("Died of infection")
-#            if globals()["per"+str(x)].getStatus() == "Immune":
-#                globals()["per"+str(x)].developCure()
-#        
-#        for x in range(1,endVal):
-#            for y in range(1,endVal):
-#                if globals()["per"+str(x)] == globals()["per"+str(y)]:
-#                    if globals()["per"+str(x)].getStatus() == "Zombie" and globals()["per"+str(y)].getStatus() == "Susceptible":
-#                        globals()["per"+str(x)].bite(globals()["per"+str(y)])
-#                    if globals()["per"+str(x)].getStatus() == "Zombie" and globals()["per"+str(y)].getStatus() == "Immune":
-#                        globals()["per"+str(x)].bite(globals()["per"+str(y)])
-#                        
-#        for x in range(1,endVal):
-#            for y in range(1,endVal):
-#                if globals()["per"+str(x)] == globals()["per"+str(y)]:
-#                    if globals()["per"+str(x)].getStatus() == "Immune" and globals()["per"+str(y)].getStatus() == "Zombie":
-#                        globals()["per"+str(x)].heal(globals()["per"+str(y)])
-#                    if globals()["per"+str(x)].getStatus() == "Immune" and globals()["per"+str(y)].getStatus() == "Infected":
-#                        globals()["per"+str(x)].heal(globals()["per"+str(y)])
+    for x in range(1, config.initPop + 1):
+        globals()["per"+str(x)] = Susceptible()
+        totalID.append(globals()["per"+str(x)].getID())
+        susceptID.append(globals()["per"+str(x)].getID())
         
-#        susceptList.append(len(susceptID))
-#        zombieList.append(len(zombieID))
-#        removeList.append(len(removeID))
-#        infectList.append(len(infectID))
-#        recoverList.append(len(recoverID))
-#        immuneList.append(len(immuneID))
-#        
-#        config.time += 1
-#        if len(zombieID) == 0 and len(infectID) == 0:
-#            config.endScene = 1
-#            runSim = False
-#        if len(susceptID) == 0 and len(immuneID) == 0 and len(recoverID) == 0:
-#            config.endScene = 2
-#            runSim = False
-#        if config.time >= 1500:
-#            config.endScene = 3
-#            runSim = False
-#    
-#    for x in range(1, endVal):
-#        print(str(x) + ": "+ str(globals()["per"+str(x)]))
-#        
-#    input("\nPress enter to display graphs:")
-#    
-#    fileName = "simulation--{}-{}-{}--{}-{}-{}.pdf".format(now.year,now.month,now.day,now.hour,now.minute,now.second)
-#    pp = PdfPages(fileName)
-#        
-#    plt.plot(susceptList, label = "Susceptible")
-#    plt.plot(zombieList, label = "Zombie")
-#    plt.legend()
-#    plt.xlabel("Time (hours)")
-#    plt.ylabel("Number of People")
-#    pp.savefig()
-#    plt.show()
-#    
-#    plt.plot(immuneList, label = "Immune")
-#    plt.plot(removeList, label = "Removed")
-#    plt.legend()
-#    plt.xlabel("Time (hours)")
-#    plt.ylabel("Number of People")
-#    pp.savefig()
-#    plt.show()
-#    
-#    
-#    
-#    while True:
-#        try:
-#            summary = input("\nWould you like to view the simulation summary? (Y/N): ")
-#            if summary not in ['N','n','Y','y']:
-#                raise ValueError
-#        except ValueError:
-#            print("\nPlease enter 'Y' or 'N'\n")
-#        else:
-#            break
-#    
-#    if summary in ['N','n']:
-#        pp.close()
-#    elif summary in ['Y','y'] and config.endScene == 1:
-#        end = "\n\nThe simulation lasted for {} hours. It ended because the Zombie and Infected population both reached zero.\n\
-#There are {} people of class Immune and {} people of class Susceptible. {} {} Recovering. \n\n".format(config.time, len(immuneID), len(susceptID), len(recoverID), config.p1 if (len(recoverID) == 1) else config.p2)
-#        print(end)
-#    elif summary in ['Y','y'] and config.endScene == 2:
-#        end = "\n\nThe simulation lasted for {} hours. It ended because the Susceptible, Immune, and Recovering populations all reached zero.\n\
-#There are {} people of class Zombie and {} people of class Infected.\n\n".format(config.time, len(zombieID), len(infectID))
-#        print(end)
-#    elif summary in ['Y','y'] and config.endScene == 3:
-#        end = "\n\nThe simulation lasted for the maximum alloted time, {} hours.\n\
-#There are {} Susceptible's, {} Zombie's, {} Immune's, {} Recovered and {} Removed.".format(config.time, len(susceptID), len(zombieID), len(immuneID), len(recoverID), len(removeID))
-#        print(end)
-#    
-#    firstPage = plt.figure(figsize=(11.69,8.27))
-#    firstPage.clf()
-#    firstPage.text(0.5,0.5,end, transform=firstPage.transFigure, size=12, ha="center")
-#    pp.savefig()
-#    plt.close()
-#    pp.close()
-#    
-#    input("Press enter to end the simulation.")
-
+    for y in range(1, config.zombiePop + 1):
+        globals()["per"+str(y)].changeStatus("Zombie")
+        
+    endVal = len(totalID) + 1
+    for x in range(1, endVal):
+        print(str(x) + ": "+ str(globals()["per"+str(x)]))
+    
+    input("\nPress enter to run simulation: ")
+    print("\n")
+    
+    config.susceptPop = len(susceptID)
+    runSim = True
+    while runSim:
+    #while config.time < 672:
+        #print("\nTime {}".format(time))
+        
+        for x in range(1, endVal):
+            globals()["per"+str(x)].walk()
+            if globals()["per"+str(x)].getStatus() == "Susceptible":
+                globals()["per"+str(x)].buildDefense()
+            if globals()["per"+str(x)].getStatus() == "Infected" or globals()["per"+str(x)].getStatus() == "Recovered":
+                globals()["per"+str(x)].determineFate()
+                if globals()["per"+str(x)].getStatus() == "Removed":
+                    globals()["per"+str(x)].setCOD("Died of infection")
+            if globals()["per"+str(x)].getStatus() == "Immune":
+                globals()["per"+str(x)].developCure()
+        
+        for x in range(1,endVal):
+            for y in range(1,endVal):
+                if globals()["per"+str(x)] == globals()["per"+str(y)]:
+                    if globals()["per"+str(x)].getStatus() == "Zombie" and globals()["per"+str(y)].getStatus() == "Susceptible":
+                        globals()["per"+str(x)].bite(globals()["per"+str(y)])
+                    if globals()["per"+str(x)].getStatus() == "Zombie" and globals()["per"+str(y)].getStatus() == "Immune":
+                        globals()["per"+str(x)].bite(globals()["per"+str(y)])
+                        
+        for x in range(1,endVal):
+            for y in range(1,endVal):
+                if globals()["per"+str(x)] == globals()["per"+str(y)]:
+                    if globals()["per"+str(x)].getStatus() == "Immune" and globals()["per"+str(y)].getStatus() == "Zombie":
+                        globals()["per"+str(x)].heal(globals()["per"+str(y)])
+                    if globals()["per"+str(x)].getStatus() == "Immune" and globals()["per"+str(y)].getStatus() == "Infected":
+                        globals()["per"+str(x)].heal(globals()["per"+str(y)])
+       
+        susceptList.append(len(susceptID))
+        zombieList.append(len(zombieID))
+        removeList.append(len(removeID))
+        infectList.append(len(infectID))
+        recoverList.append(len(recoverID))
+        immuneList.append(len(immuneID))
+        
+        config.time += 1
+        if len(zombieID) == 0 and len(infectID) == 0:
+            config.endScene = 1
+            runSim = False
+        if len(susceptID) == 0 and len(immuneID) == 0 and len(recoverID) == 0:
+            config.endScene = 2
+            runSim = False
+        if config.time >= 1500:
+            config.endScene = 3
+            runSim = False
+    
+    for x in range(1, endVal):
+        print(str(x) + ": "+ str(globals()["per"+str(x)]))
+        
+    input("\nPress enter to display graphs:")
+    
+    fileName = "simulation--{}-{}-{}--{}-{}-{}.pdf".format(now.year,now.month,now.day,now.hour,now.minute,now.second)
+    pp = PdfPages(fileName)
+        
+    plt.plot(susceptList, label = "Susceptible")
+    plt.plot(zombieList, label = "Zombie")
+    plt.legend()
+    plt.xlabel("Time (hours)")
+    plt.ylabel("Number of People")
+    pp.savefig()
+    plt.show()
+    
+    plt.plot(immuneList, label = "Immune")
+    plt.plot(removeList, label = "Removed")
+    plt.legend()
+    plt.xlabel("Time (hours)")
+    plt.ylabel("Number of People")
+    pp.savefig()
+    plt.show()
+    
+    
+    
+    while True:
+        try:
+            summary = input("\nWould you like to view the simulation summary? (Y/N): ")
+            if summary not in ['N','n','Y','y']:
+                raise ValueError
+        except ValueError:
+            print("\nPlease enter 'Y' or 'N'\n")
+        else:
+            break
+    
+    if summary in ['N','n']:
+        pp.close()
+    elif summary in ['Y','y'] and config.endScene == 1:
+        end = "\n\nThe simulation lasted for {} hours. It ended because the Zombie and Infected population both reached zero.\n\
+There are {} people of class Immune and {} people of class Susceptible. {} {} Recovering. \n\n".format(config.time, len(immuneID), len(susceptID), len(recoverID), config.p1 if (len(recoverID) == 1) else config.p2)
+        print(end)
+    elif summary in ['Y','y'] and config.endScene == 2:
+        end = "\n\nThe simulation lasted for {} hours. It ended because the Susceptible, Immune, and Recovering populations all reached zero.\n\
+There are {} people of class Zombie and {} people of class Infected.\n\n".format(config.time, len(zombieID), len(infectID))
+        print(end)
+    elif summary in ['Y','y'] and config.endScene == 3:
+        end = "\n\nThe simulation lasted for the maximum alloted time, {} hours.\n\
+There are {} Susceptible's, {} Zombie's, {} Immune's, {} Recovered and {} Removed.".format(config.time, len(susceptID), len(zombieID), len(immuneID), len(recoverID), len(removeID))
+        print(end)
+    
+    firstPage = plt.figure(figsize=(11.69,8.27))
+    firstPage.clf()
+    firstPage.text(0.5,0.5,end, transform=firstPage.transFigure, size=12, ha="center")
+    pp.savefig()
+    plt.close()
+    pp.close()
+    
+    input("Press enter to end the simulation.")
 
 main()
